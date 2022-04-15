@@ -1,6 +1,6 @@
-export declare class ManualPromise extends Promise<void> {
+export declare class ManualPromise<T = void> extends Promise<T> {
     static get [Symbol.species](): PromiseConstructor;
-    readonly resolve: () => void;
+    readonly resolve: (value: T) => void;
     readonly reject: (err: Error) => void;
     constructor();
 }
