@@ -1,8 +1,8 @@
-export class ManualPromise<T = void> extends Promise<T> {
+export abstract class ManualPromise<T = void> extends Promise<T> {
 	public static get [Symbol.species]() { return Promise; }
 
-	public readonly resolve: (value: T) => void;
-	public readonly reject: (err: Error) => void;
+	protected resolve: (value: T) => void;
+	protected reject: (err: Error) => void;
 
 	constructor() {
 		let tmpResolve: (value: T) => void;
