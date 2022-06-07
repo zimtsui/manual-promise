@@ -2,7 +2,7 @@
 
 [![Npm package version](https://badgen.net/npm/v/@zimtsui/manual-promise)](https://www.npmjs.com/package/@zimtsui/manual-promise)
 
-A Promise which can be resolved manually.
+Promise which can be resolved manually.
 
 ## Usage
 
