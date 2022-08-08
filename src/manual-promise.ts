@@ -18,5 +18,7 @@ export abstract class ManualPromise<T> extends Promise<T> {
 
 		this.resolve = tmpResolve!;
 		this.reject = tmpReject!;
+
+		this.catch(() => { });
 	}
 }

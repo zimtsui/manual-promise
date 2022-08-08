@@ -11,6 +11,7 @@ class ManualPromise extends Promise {
         });
         this.resolve = tmpResolve;
         this.reject = tmpReject;
+        this.catch(() => { });
     }
     // https://stackoverflow.com/questions/48158730/extend-javascript-promise-and-resolve-or-reject-it-inside-constructor/48159603
     // https://tc39.es/ecma262/#sec-promise.prototype.then
