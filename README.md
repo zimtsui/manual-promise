@@ -7,10 +7,9 @@ Promise which can be resolved manually.
 ## Usage
 
 ```ts
-import { ManualPromise } from '@zimtsui/manual-promise';
+import { PublicManualPromise } from '@zimtsui/manual-promise';
 
-class MyPromise<T> extends ManualPromise<T> {
-	public resolve!: (value: T) => void;
-	public reject!: (err: Error) => void;
-}
+const p = new PublicManualPromise<void>();
+p.resolve();
+p.reject();
 ```

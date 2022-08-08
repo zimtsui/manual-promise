@@ -1,7 +1,7 @@
 import { ManualPromise } from './manual-promise';
 
 
-export class PublicManualPromise extends ManualPromise<void> {
-	public resolve!: (value: void) => void;
+export class PublicManualPromise<T> extends ManualPromise<T> {
+	public resolve!: (value: T) => void;
 	public reject!: (err: Error) => void;
 }
