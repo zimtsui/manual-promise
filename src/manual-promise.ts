@@ -1,24 +1,28 @@
-export abstract class ManualPromise<T> extends Promise<T> {
-	// https://stackoverflow.com/questions/48158730/extend-javascript-promise-and-resolve-or-reject-it-inside-constructor/48159603
-	// https://tc39.es/ecma262/#sec-promise.prototype.then
-	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/species
-	public static get [Symbol.species]() { return Promise; }
+export class ManualPromise<T> implements PromiseLike<T> {
+	private native: PromiseLike<T>;
+	public resolve!: (value: T | PromiseLike<T>) => void;
+	public reject!: (reason?: any) => void;
 
-	protected resolve: (value: T) => void;
-	protected reject: (err: Error) => void;
-
-	constructor() {
-		let tmpResolve: (value: T) => void;
-		let tmpReject: () => void;
-
-		super((resolve, reject) => {
-			tmpResolve = resolve;
-			tmpReject = reject;
+	public constructor() {
+		this.native = new Promise((resolve, reject) => {
+			this.resolve = resolve;
+			this.reject = reject;
 		});
+		this.native.then(x => x, () => { });
+	}
 
-		this.resolve = tmpResolve!;
-		this.reject = tmpReject!;
+	public then<TResult1 = T, TResult2 = never>(onFulfilled: ((value: T) => TResult1 | PromiseLike<TResult1>) | null | undefined, onRejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null | undefined): PromiseLike<TResult1 | TResult2> {
+		return this.native.then(onFulfilled, onRejected);
+	}
 
-		this.catch(() => { });
+	public catch<TResult2>(
+		onRejected: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null | undefined,
+	): PromiseLike<T | TResult2> {
+		return this.native.then(x => x, onRejected);
+	}
+
+	public finally(onFinally: () => void): PromiseLike<T> {
+		return this.then(onFinally, onFinally)
+			.then(() => this);
 	}
 }
